@@ -1,0 +1,57 @@
+*Informe Power BI Orders-Delivered-Compliance   🌍
+INTRODUCCIÓN:
+Si tenemos una serie de Operaciones, Pedidos, Tareas etc., y por otro lado; Transacciones, Envíos, Tareas completadas, Servicios. Puede haber varios plazos de entrega, o plazo único.
+Si queremos controlar, medir, monitorizar, tanto en Tiempo ('Plazos') como en su porcentaje Cumplimiento ('Alcance'), lógicamente debemos tener los datos previamente estructurados para su posterior visualización.
+FUENTES DEL INFORME: Hipotéticas.
+ESTRUCTURA Y MODELO SEMÁNTICO: 
+Aunque en realidad estaríamos hablando de lo mismo, podemos diferenciar entre una única tabla que contenga Orders y Deliveries, o bien 2 tablas distintas, en cualquier caso han de tener una campo que relacione ambas. Pero a partir de lo dicho anteriormente sí podemos hacer 2 planteamientos distintos, lo cual es la razón de este estudio.
+Siempre una tabla Calendar que nos permita visualizar con formato fecha que deseamos.
+Aporto 2 soluciones entre otras.
+**FactTable única****** Esta primerea solución, con mejor rendimiento ya que evita 'copos de nieve', es única tabla de hechos con 2 relaciones, una activa Calendar[Fecha]➡️FactTable[DateOrder] y otra inactiva una activa Calendar[Fecha]➡️FactTable[DeliveryDate], sin más necesidades.
+MEDIDAS DAX:
+1.	Orders = 
+CALCULATE(
+    SUMX(
+        SUMMARIZE(FactTable, FactTable[OrderId], FactTable[AmountOrder], Calendar[Año#Mes]),
+        FactTable[AmountOrder]
+    ),
+    USERELATIONSHIP(FactTable[DateOrder], Calendar[Fecha])
+)
+2.	Deliveries = sum(FactTable[AmountServed])
+3.	Delivered=CALCULATE(
+[Deliveries],USERELATIONSHIP('Calendar'[Fecha],FactTable[DeliveryDate])
+)
+4.	Compliance = DIVIDE([Delivered],[Orders],1)
+
+** 2FactTable*****  es otra solución si utilizamos 2 tablas una de Pedido u Orders y otra Envíos o Deliveries relacionándolas a través de "OrderId". Las otras relaciones de fechas igual que en lo anterior, pero desde sus respectivas tablas, en lugar de una única tabla.
+
+MEDIDAS DAX:
+
+1.	pedidos = SUM(Pedidos[AmountOrder])
+2.	envíos = sum('Envíos'[AmountServed])
+3.	Orders = CALCULATE(
+[pedidos],USERELATIONSHIP('Calendar'[Fecha],Pedidos[DateOrder])
+)
+4.	Delivered=CALCULATE(
+[envíos],USERELATIONSHIP('Calendar'[Fecha],'Envíos'[DeliveryDate])
+)
+5.	Compliance = DIVIDE([Delivered],[Orders],1)
+
+
+
+	
+					
+
+
+
+		
+
+
+
+
+
+
+
+
+
+
