@@ -1,1 +1,1 @@
-<iframe title="PRUEBAS LINKEDIN - 2 RELACIONES 22" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiYTdlODIyYTgtMGFmZC00OGVmLWE1MzktOGQ2Nzg3NDY2OGRmIiwidCI6ImM4NDZlZWU0LWNkY2QtNDcxNy04OWQ1LTExOWRkZGY1NzAzZiIsImMiOjl9&embedImagePlaceholder=true" frameborder="0" allowFullScreen="true"></iframe>
+https://app.powerbi.com/view?r=eyJrIjoiYTdlODIyYTgtMGFmZC00OGVmLWE1MzktOGQ2Nzg3NDY2OGRmIiwidCI6ImM4NDZlZWU0LWNkY2QtNDcxNy04OWQ1LTExOWRkZGY1NzAzZiIsImMiOjl9&embedImagePlaceholder=true
